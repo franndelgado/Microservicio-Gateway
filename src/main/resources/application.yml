@@ -1,0 +1,32 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: service-gateway-server
+  cloud:
+    gateway:
+      routes:
+        - id: userMicroService
+          uri: lb://userMicroService
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - StripPrefix=2
+        - id: accountMicroService
+          uri: lb://accountMicroService
+          predicates:
+            - Path=/api/accounts/**
+          filters:
+            - StripPrefix=2
+        - id: transactionMicroService
+          uri: lb://transactionMicroService
+          predicates:
+            - Path=/api/transactions/**
+          filters:
+            - StripPrefix=2
+        - id: security-service
+          uri: lb://security-service
+          predicates:
+            - Path=/api/security/**
+          filters:
+            - StripPrefix=2
